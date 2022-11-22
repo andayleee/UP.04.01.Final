@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавление нового билета</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+   .text {
+    text-align:  center;
+   }
+  </style>
+</head>
+<body>
+<form th:action="${'/ticketAdd'}" method="post" class="text">
+
+
+    <label>Введите ФИО клиента<br>
+        <input type="text" name="fioClient"/></label>
+    <p>
+        <label>Введите дату покупки<br>
+            <input type="date" name="dateOfDelivery"/>
+        </label>
+    </p>
+    <label>Введите стоимость билета<br>
+        <input type="number" name="coast"/>
+    </label>
+    <p>
+        <label>Кол-во купленных билетов<br>
+            <input type="number" name="countClientsSeats"/>
+        </label>
+    </p>
+    <label>Оплачен?<br>
+        <input type="checkbox" name="isPaid"/>
+    </label>
+    <p>
+        <button type="submit">Добавить бмлет</button>
+    </p>
+</form>
+</body>
+</html>

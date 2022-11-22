@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Добавление нового рейса</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <style>
+   .text {
+    text-align:  center;
+   }
+  </style>
+</head>
+<body>
+<form th:action="${'/flightAdd'}" method="post" class="text">
+
+
+  <label>Введите Дату рейса<br>
+    <input type="date" name="dateOfFlight"/></label>
+  <p>
+    <label>Введите время отправления<br>
+      <input type="time" step="2" name="timeOfDeparture"/>
+    </label>
+  </p>
+  <label>Введите место отправления<br>
+    <input type="text" name="pointOfDeparture"/>
+  </label>
+  <p>
+    <label>Есть в наличии?<br>
+      <input type="checkbox" name="soldOut"/>
+    </label>
+  </p>
+  <label>Кол-во мест<br>
+    <input type="number" name="countOfSeats"/>
+  </label>
+  <p>
+  <button type="submit">Добавить рейс</button>
+  </p>
+</form>
+</body>
+</html>

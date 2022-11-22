@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <style>
+   .text {
+    text-align:  center;
+   }
+  </style>
+</head>
+<body>
+<h2 class="text">Фильтрация</h2>
+<form class="text" method="post" th:action="${'/flightFilter/result'}">
+  <input type="text" name="pointOfDeparture">
+  <button type="submit">Найти</button>
+  <div class="text">
+  <table border="0" class="text" align="center">
+    <tr>
+      <td>
+        <fieldset class="text">
+          <legend>Жесткий поиск</legend>
+          <div th:each="el : ${result2}">
+            <p th:text="${el.dateOfFlight}"></p>
+            <p th:text="${el.timeOfDeparture}"></p>
+            <p th:text="${el.pointOfDeparture}"></p>
+            <p th:text="${el.soldOut}"></p>
+            <p th:text="${el.countOfSeats}"></p>
+          </div>
+        </fieldset>
+      </td>
+      <td>
+        <fieldset class="text">
+          <legend>Мягкий поиск</legend>
+          <div th:each="el : ${result}">
+            <p th:text="${el.dateOfFlight}"></p>
+            <p th:text="${el.timeOfDeparture}"></p>
+            <p th:text="${el.pointOfDeparture}"></p>
+            <p th:text="${el.soldOut}"></p>
+            <p th:text="${el.countOfSeats}"></p>
+          </div>
+        </fieldset>
+      </td>
+    </tr>
+  </table>
+  </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Getting Started: Serving Web Content</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <style>
+   .text {
+    text-align:  center;
+   }
+  </style>
+</head>
+<body>
+<form class="text" th:action="${'/'}">
+  <table border="0">
+    <tr>
+      <td>
+        <h1>Рейсы</h1>
+        <a href="/flightAdd">Добавить рейс</a>
+        <a href="/flightFilter">Поиск рейса</a>
+      </td>
+      <td>
+        <h1>Билеты</h1>
+        <a href="/ticketAdd">Добавить билет</a>
+        <a href="/ticketFilter">Поиск билета</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div th:each="el : ${flight}" class="text">
+          <h3 th:text="${el.pointOfDeparture}"></h3>
+          <p th:text="${el.dateOfFlight}"></p>
+          <p th:text="${el.timeOfDeparture}"></p>
+          <p th:text="${el.soldOut}"></p>
+          <p th:text="${el.countOfSeats}"></p>
+        </div>
+      </td>
+      <td>
+        <form class="text" th:action="${'/ticket'}">
+        <div th:each="el : ${ticket}" class="text">
+          <h3 th:text="${el.fioClient}"></h3>
+          <p th:text="${el.dateOfDelivery}"></p>
+          <p th:text="${el.countClientsSeats}"></p>
+          <p th:text="${el.coast}"></p>
+          <p th:text="${el.isPaid}"></p>
+        </div>
+        </form>
+      </td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>
