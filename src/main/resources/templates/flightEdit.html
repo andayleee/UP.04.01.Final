@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <title>Редактирование рейса</title>
+</head>
+<body class="body">
+<div class="nav">
+    <a href="/" class="menu-activator"><i class="ion-ios-more"></i></a>
+    <i class="ion-cube"></i>
+</div>
+<div class="container">
+    <div class="inner">
+        <div class="panel panel-left">
+            <div class="panel-content">
+                <div class="image-background">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-right">
+            <div class="panel-content" >
+                <form class="form" th:each="el: ${flight}" method="post">
+                    <h1>Изменение рейса</h1>
+                    <div class="group">
+                        <input type="date" th:value="${el.dateOfFlight}" name="dateOfFlight">
+                        <span class="highlight"></span>
+                        <label>Введите Дату рейса</label>
+                    </div>
+                    <div class="group">
+                        <input type="time" step="2" th:value="${el.timeOfDeparture}"  name="timeOfDeparture">
+                        <label>Введите время отправления</label>
+                    </div>
+                    <div class="group">
+                        <input type="text" th:value="${el.pointOfDeparture}" name="pointOfDeparture" required>
+                        <span class="highlight"></span>
+                        <label>Введите место отправления</label>
+                    </div>
+                    <div class="group">
+                        <input type="checkbox" th:checked="${el.soldOut}" name="soldOut">
+                        <span class="highlight"></span>
+                        <label>Есть в наличии?</label>
+                    </div>
+                    <div class="group">
+                        <input type="number" th:value="${el.countOfSeats}" name="countOfSeats" required>
+                        <span class="highlight"></span>
+                        <label>Кол-во мест</label>
+                    </div>
+                    <form method="post">
+                    <button class="btn fifth" type="submit">Изменить рейс</button>
+                    </form>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="menu"></div>
+</body>
+</html>

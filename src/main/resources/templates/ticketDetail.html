@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <title>Title</title>
+</head>
+<body class="body">
+<div class="nav">
+    <a href="/" class="menu-activator"><i class="ion-ios-more"></i></a>
+    <i class="ion-cube"></i>
+</div>
+<div class="inner">
+    <div class="panel panel-left">
+        <div class="panel-content">
+            <div class="image-background">
+            </div>
+        </div>
+    </div>
+    <div class="panel-content">
+        <div class="form">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ФИО клиента</th>
+                    <th>Дата покупки</th>
+                    <th>Кол-во мест</th>
+                    <th>Стоимость</th>
+                    <th>Оплачен?</th>
+                    <th>Редактирование</th>
+                    <th>Удаление</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="el : ${ticket}">
+                        <td><h3 th:text="${el.fioClient}"></h3></td>
+                        <td><a th:text="${el.dateOfDelivery}"></a></td>
+                        <td><a th:text="${el.countClientsSeats}"></a></td>
+                        <td><a th:text="${el.coast}"></a></td>
+                        <td><a th:text="${el.isPaid}"></a></td>
+                        <td><a class="send-btn" th:href="'/ticket/' + ${el.id} + '/edit'">Редактировать</a></td>
+                        <td><a class="send-btn" th:href="'/ticket/' + ${el.id} + '/remove'">Удалить</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

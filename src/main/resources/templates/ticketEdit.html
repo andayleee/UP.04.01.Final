@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <title>Редактирование билета</title>
+</head>
+<body class="body">
+<div class="nav">
+  <a href="/" class="menu-activator"><i class="ion-ios-more"></i></a>
+  <i class="ion-cube"></i>
+</div>
+<div class="container">
+  <div class="inner">
+    <div class="panel panel-left">
+      <div class="panel-content">
+        <div class="image-background">
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-right">
+      <div class="panel-content" >
+        <form class="form" th:each="el: ${ticket}" method="post">
+          <h1>Изменение рейса</h1>
+          <div class="group">
+            <input type="text" th:value="${el.fioClient}" name="fioClient" required>
+            <span class="highlight"></span>
+            <label>Введите ФИО клиента</label>
+          </div>
+          <div class="group">
+            <input type="date" th:value="${el.dateOfDelivery}"  name="dateOfDelivery">
+            <label>Введите дату заказа</label>
+          </div>
+          <div class="group">
+            <input type="number" th:value="${el.countClientsSeats}" name="countClientsSeats" required>
+            <span class="highlight"></span>
+            <label>Введите кол-во билетов</label>
+          </div>
+          <div class="group">
+            <input type="number" th:checked="${el.coast}" name="coast">
+            <span class="highlight"></span>
+            <label>Введите стоимость</label>
+          </div>
+          <div class="group">
+            <input type="checkbox" th:value="${el.isPaid}" name="isPaid">
+            <label>Оплачен?</label>
+          </div>
+          <form method="post">
+            <button class="btn fifth" type="submit">Изменить билет</button>
+          </form>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="menu"></div>
+</body>
+</html>

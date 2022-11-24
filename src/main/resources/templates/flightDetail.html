@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <title>Title</title>
+</head>
+<body class="body">
+    <div class="nav">
+        <a href="/" class="menu-activator"><i class="ion-ios-more"></i></a>
+        <i class="ion-cube"></i>
+    </div>
+    <div class="inner">
+        <div class="panel panel-left">
+            <div class="panel-content">
+                <div class="image-background">
+                </div>
+            </div>
+        </div>
+            <div class="panel-content">
+                <div class="form">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Место отправления</th>
+                            <th>Дата рейса</th>
+                            <th>Время отправления</th>
+                            <th>В наличии?</th>
+                            <th>Количество мест</th>
+                            <th>Редактирование</th>
+                            <th>Удаление</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="el : ${flight}">
+                            <td><h3 th:text="${el.pointOfDeparture}"></h3></td>
+                            <td><a th:text="${el.dateOfFlight}"></a></td>
+                            <td><a th:text="${el.timeOfDeparture}"></a></td>
+                            <td><a th:text="${el.soldOut}"></a></td>
+                            <td><a th:text="${el.countOfSeats}"></a></td>
+                            <td><a class="send-btn" th:href="'/flight/' + ${el.id} + '/edit'">Редактировать</a></td>
+                            <td><a class="send-btn" th:href="'/flight/' + ${el.id} + '/remove'">Удалить</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
+</body>
+</html>

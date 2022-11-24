@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class flightController {
@@ -64,4 +67,62 @@ public class flightController {
         model.addAttribute("result", result1);
         return "flightFilter";
     }
+
+    @GetMapping("/flight/{id}")
+    public String flightDetailis(@PathVariable(value = "id") long id, Model model)
+    {
+        Optional<flight> flight = FlightRepository.findById(id);
+        ArrayList<flight> res = new ArrayList<>();
+        flight.ifPresent(res::add);
+        model.addAttribute("flight", res);
+        if(!FlightRepository.existsById(id)){
+            return "redirect:/flight";
+        }
+        return "flightDetail";
+    }
+
+    @GetMapping("/flight/{id}/edit")
+    public String flightEdit(@PathVariable("id") long id, Model model)
+    {
+        if(!FlightRepository.existsById(id)){
+            return "redirect:/";
+        }
+        Optional<flight> flight = FlightRepository.findById(id);
+        ArrayList<flight> res = new ArrayList<>();
+        flight.ifPresent(res::add);
+        model.addAttribute("flight", res);
+        return "flightEdit";
+    }
+    @PostMapping("/flight/{id}/edit")
+    public String flightUpdate(@PathVariable("id")long id,
+                               @RequestParam Date dateOfFlight,
+                               @RequestParam Time timeOfDeparture,
+                               @RequestParam String pointOfDeparture,
+                               @RequestParam(defaultValue = "false") boolean soldOut,
+                               @RequestParam int countOfSeats,Model model)
+    {
+        flight Flight = FlightRepository.findById(id).orElseThrow();
+        Flight.setDateOfFlight(dateOfFlight);
+        Flight.setTimeOfDeparture(timeOfDeparture);
+        Flight.setPointOfDeparture(pointOfDeparture);
+        Flight.setSoldOut(soldOut);
+        Flight.setCountOfSeats(countOfSeats);
+        FlightRepository.save(Flight);
+        return "redirect:/";
+    }
+    @GetMapping("/flight/{id}/remove")
+    public String flightRemove(@PathVariable("id") long id, Model model)
+    {
+        flight Flight = FlightRepository.findById(id).orElseThrow();
+        FlightRepository.delete(Flight);
+        return "redirect:/";
+    }
+//    @PostMapping("/flight/{id}/remove")
+//    public String flightDelete(@PathVariable("id") long id, Model model)
+//    {
+//        flight Flight = FlightRepository.findById(id).orElseThrow();
+//        FlightRepository.delete(Flight);
+//        return "redirect:/";
+//    }
+
 }
