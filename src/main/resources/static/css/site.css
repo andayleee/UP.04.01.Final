@@ -167,7 +167,7 @@ body.menu-active .nav a.white {
   margin: 0 auto;
   width: 300px;
   min-height: 400px;
-  top: 50%;
+  top: 20%;
   left: 50%;
   transform: translateX(-50%) translateY(-25%);
 }

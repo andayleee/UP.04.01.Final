@@ -6,11 +6,10 @@ import com.example.upAksenovPrac2.repo.ticketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -30,20 +29,17 @@ public class ticketController {
 //    }
 
     @GetMapping("/ticketAdd")
-    public String ticketAdd(Model model)
+    public String ticketAdd(@ModelAttribute("ticket") ticket ticket)
     {
         return "ticketAdd";
     }
 
     @PostMapping("/ticketAdd")
-    public String ticketAddAdd(@RequestParam String fioClient,
-                               @RequestParam (defaultValue = "02.02.2001") Date dateOfDelivery,
-                               @RequestParam (defaultValue = "0")double coast,
-                               @RequestParam (defaultValue = "0")int countClientsSeats,
-                               @RequestParam (defaultValue = "false")boolean isPaid,Model model)
+    public String ticketAddAdd(@ModelAttribute("ticket") @Valid ticket ticket, BindingResult bindingResult)
     {
-        ticket Ticket = new ticket(fioClient, dateOfDelivery, coast, countClientsSeats, isPaid);
-        TicketRepository.save(Ticket);
+        if (bindingResult.hasErrors())
+            return "ticketAdd";
+        TicketRepository.save(ticket);
         return "redirect:/";
     }
 
@@ -82,27 +78,17 @@ public class ticketController {
         if(!TicketRepository.existsById(id)){
             return "redirect:/";
         }
-        Optional<ticket> ticket = TicketRepository.findById(id);
-        ArrayList<ticket> res = new ArrayList<>();
-        ticket.ifPresent(res::add);
+        ticket res = TicketRepository.findById(id).orElseThrow();
         model.addAttribute("ticket", res);
         return "ticketEdit";
     }
     @PostMapping("/ticket/{id}/edit")
     public String ticketUpdate(@PathVariable("id")long id,
-                               @RequestParam String fioClient,
-                               @RequestParam Date dateOfDelivery,
-                               @RequestParam double coast,
-                               @RequestParam int countClientsSeats,
-                               @RequestParam (defaultValue = "false")boolean isPaid,Model model)
+                               @Valid ticket ticket, BindingResult bindingResult)
     {
-        ticket Ticket = TicketRepository.findById(id).orElseThrow();
-        Ticket.setFioClient(fioClient);
-        Ticket.setDateOfDelivery(dateOfDelivery);
-        Ticket.setCoast(coast);
-        Ticket.setCountClientsSeats(countClientsSeats);
-        Ticket.setPaid(isPaid);
-        TicketRepository.save(Ticket);
+        if (bindingResult.hasErrors())
+            return "ticketEdit";
+        TicketRepository.save(ticket);
         return "redirect:/";
     }
     @GetMapping("/ticket/{id}/remove")

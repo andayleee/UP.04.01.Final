@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.*;
 import java.sql.Date;
 import java.sql.Time;
 
@@ -20,10 +21,15 @@ public class flight {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotNull(message = "Ведите дату")
     private Date dateOfFlight;
+    @NotNull(message = "Ведите время")
     private Time timeOfDeparture;
+    @NotEmpty(message = "Значение не может быть пустым")
     private  String pointOfDeparture;
     private boolean soldOut;
+    @Min(value=0, message="Количество мест не может быть меньше 0")
+    @Max(value=10, message="Количество мест не может быть больше 10")
     private int countOfSeats;
 
 

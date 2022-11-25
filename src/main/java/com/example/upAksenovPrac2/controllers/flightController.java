@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -35,20 +38,17 @@ public class flightController {
     }
 
     @GetMapping("/flightAdd")
-    public String flightAdd(Model model)
+    public String flightAdd(@ModelAttribute("flight") flight flight)
     {
         return "flightAdd";
     }
 
     @PostMapping("/flightAdd")
-    public String flightAddAdd(@RequestParam (defaultValue = "02.02.2001")Date dateOfFlight,
-                               @RequestParam (defaultValue = "00:00:00") Time timeOfDeparture,
-                               @RequestParam String pointOfDeparture,
-                               @RequestParam (defaultValue = "false")boolean soldOut,
-                               @RequestParam (defaultValue = "0")int countOfSeats,Model model)
+    public String flightAddAdd(@ModelAttribute("flight") @Valid flight flight, BindingResult bindingResult)
     {
-        flight Flight = new flight(dateOfFlight, timeOfDeparture, pointOfDeparture, soldOut, countOfSeats);
-        FlightRepository.save(Flight);
+        if (bindingResult.hasErrors())
+            return "flightAdd";
+        FlightRepository.save(flight);
         return "redirect:/";
     }
 
@@ -87,27 +87,17 @@ public class flightController {
         if(!FlightRepository.existsById(id)){
             return "redirect:/";
         }
-        Optional<flight> flight = FlightRepository.findById(id);
-        ArrayList<flight> res = new ArrayList<>();
-        flight.ifPresent(res::add);
+        flight res = FlightRepository.findById(id).orElseThrow();
         model.addAttribute("flight", res);
         return "flightEdit";
     }
     @PostMapping("/flight/{id}/edit")
     public String flightUpdate(@PathVariable("id")long id,
-                               @RequestParam Date dateOfFlight,
-                               @RequestParam Time timeOfDeparture,
-                               @RequestParam String pointOfDeparture,
-                               @RequestParam(defaultValue = "false") boolean soldOut,
-                               @RequestParam int countOfSeats,Model model)
+                               @Valid flight flight, BindingResult bindingResult)
     {
-        flight Flight = FlightRepository.findById(id).orElseThrow();
-        Flight.setDateOfFlight(dateOfFlight);
-        Flight.setTimeOfDeparture(timeOfDeparture);
-        Flight.setPointOfDeparture(pointOfDeparture);
-        Flight.setSoldOut(soldOut);
-        Flight.setCountOfSeats(countOfSeats);
-        FlightRepository.save(Flight);
+        if (bindingResult.hasErrors())
+            return "flightEdit";
+        FlightRepository.save(flight);
         return "redirect:/";
     }
     @GetMapping("/flight/{id}/remove")

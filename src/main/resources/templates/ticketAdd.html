@@ -6,13 +6,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body class="body">
-<form th:action="${'/ticketAdd'}" class="body" method="post">
+<form th:action="${'/ticketAdd'}" th:object="${ticket}" class="body" method="post">
     <div class="nav">
         <a href="/" class="menu-activator"><i class="ion-ios-more"></i></a>
         <i class="ion-cube"></i>
     </div>
     <div class="container">
         <div class="inner">
+            <div class="form group" style="color: red" th:if="${#fields.hasErrors('fioClient')}" th:errors="*{fioClient}"></div>
+            <div class="form group" style="color: red" th:if="${#fields.hasErrors('dateOfDelivery')}" th:errors="*{dateOfDelivery}"></div>
+            <div class="form group" style="color: red" th:if="${#fields.hasErrors('coast')}" th:errors="*{coast}"></div>
+            <div class="form group" style="color: red" th:if="${#fields.hasErrors('countClientsSeats')}" th:errors="*{countClientsSeats}"></div>
             <div class="panel panel-left">
                 <div class="panel-content">
                     <div class="image-background">
@@ -25,22 +29,22 @@
                     <div class="form">
                         <h1>Добавление билета</h1>
                         <div class="group">
-                            <input type="text" name="fioClient" required>
+                            <input type="text" th:field="*{fioClient}" name="fioClient" required>
                             <span class="highlight"></span>
                             <label>Введите ФИО клиента</label>
                         </div>
                         <div class="group">
-                            <input type="date" name="dateOfDelivery">
+                            <input type="date" th:field="*{dateOfDelivery}" name="dateOfDelivery">
                             <span class="highlight"></span>
                             <label>Введите Дату покупки</label>
                         </div>
                         <div class="group">
-                            <input type="number" name="coast" required>
+                            <input type="number" th:field="*{coast}" name="coast" required>
                             <span class="highlight"></span>
                             <label>Введите стоимость билета</label>
                         </div>
                         <div class="group">
-                            <input type="number" name="countClientsSeats" required>
+                            <input type="number" th:field="*{countClientsSeats}" name="countClientsSeats" required>
                             <span class="highlight"></span>
                             <label>Кол-во купленных билетов</label>
                         </div>

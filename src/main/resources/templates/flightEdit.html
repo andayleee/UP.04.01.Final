@@ -6,12 +6,18 @@
     <title>Редактирование рейса</title>
 </head>
 <body class="body">
+<form class="body" th:each="el: ${flight}" th:object="${flight}" method="post">
 <div class="nav">
     <a href="/" class="menu-activator"><i class="ion-ios-more"></i></a>
     <i class="ion-cube"></i>
 </div>
 <div class="container">
     <div class="inner">
+        <div class="form group" style="color: red" th:if="${#fields.hasErrors('dateOfFlight')}" th:errors="*{dateOfFlight}"></div>
+        <div class="form group" style="color: red" th:if="${#fields.hasErrors('timeOfDeparture')}" th:errors="*{timeOfDeparture}"></div>
+        <div class="form group" style="color: red" th:if="${#fields.hasErrors('pointOfDeparture')}" th:errors="*{pointOfDeparture}"></div>
+        <div class="form group" style="color: red" th:if="${#fields.hasErrors('soldOut')}" th:errors="*{soldOut}"></div>
+        <div class="form group" style="color: red" th:if="${#fields.hasErrors('countOfSeats')}" th:errors="*{countOfSeats}"></div>
         <div class="panel panel-left">
             <div class="panel-content">
                 <div class="image-background">
@@ -21,40 +27,41 @@
 
         <div class="panel panel-right">
             <div class="panel-content" >
-                <form class="form" th:each="el: ${flight}" method="post">
+                <div class="form">
                     <h1>Изменение рейса</h1>
                     <div class="group">
-                        <input type="date" th:value="${el.dateOfFlight}" name="dateOfFlight">
+                        <input type="date" th:value="${el.dateOfFlight}" th:field="*{dateOfFlight}" name="dateOfFlight">
                         <span class="highlight"></span>
                         <label>Введите Дату рейса</label>
                     </div>
                     <div class="group">
-                        <input type="time" step="2" th:value="${el.timeOfDeparture}"  name="timeOfDeparture">
+                        <input type="time" step="2" th:value="${el.timeOfDeparture}" th:field="*{timeOfDeparture}"  name="timeOfDeparture">
                         <label>Введите время отправления</label>
                     </div>
                     <div class="group">
-                        <input type="text" th:value="${el.pointOfDeparture}" name="pointOfDeparture" required>
+                        <input type="text" th:value="${el.pointOfDeparture}" th:field="*{pointOfDeparture}" name="pointOfDeparture" required>
                         <span class="highlight"></span>
                         <label>Введите место отправления</label>
                     </div>
                     <div class="group">
-                        <input type="checkbox" th:checked="${el.soldOut}" name="soldOut">
+                        <input type="checkbox" th:checked="${el.soldOut}" th:field="*{soldOut}" name="soldOut">
                         <span class="highlight"></span>
                         <label>Есть в наличии?</label>
                     </div>
                     <div class="group">
-                        <input type="number" th:value="${el.countOfSeats}" name="countOfSeats" required>
+                        <input type="number" th:value="${el.countOfSeats}" th:field="*{countOfSeats}" name="countOfSeats" required>
                         <span class="highlight"></span>
                         <label>Кол-во мест</label>
                     </div>
                     <form method="post">
                     <button class="btn fifth" type="submit">Изменить рейс</button>
                     </form>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <div class="menu"></div>
+</form>
 </body>
 </html>

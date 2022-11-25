@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.*;
 import java.sql.Date;
 import java.sql.Time;
 
@@ -20,9 +21,14 @@ public class ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotEmpty(message = "Значение не может быть пустым")
     private String fioClient;
+    @NotNull(message = "Ведите дату")
     private Date dateOfDelivery;
+    @Digits(integer = 6, fraction = 2, message = "Число не может быть более 999999,99")
     private  double coast;
+    @Min(value=0, message="Количество купленных мест не может быть меньше 0")
+    @Max(value=10, message="Количество купленных мест не может быть больше 10")
     private int countClientsSeats;
     private boolean isPaid;
 
