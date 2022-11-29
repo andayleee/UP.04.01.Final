@@ -1,7 +1,10 @@
 package com.example.upAksenovPrac2.controllers;
 
+import com.example.upAksenovPrac2.models.cheque;
+import com.example.upAksenovPrac2.models.contract;
 import com.example.upAksenovPrac2.models.flight;
 import com.example.upAksenovPrac2.models.ticket;
+import com.example.upAksenovPrac2.repo.chequeRepository;
 import com.example.upAksenovPrac2.repo.ticketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,8 @@ import java.util.Optional;
 public class ticketController {
     @Autowired
     private ticketRepository TicketRepository;
+    @Autowired
+    private chequeRepository ChequeRepository;
 //    @GetMapping("/ticket")
 //    public String tickets(Model model)
 //    {
@@ -29,16 +34,23 @@ public class ticketController {
 //    }
 
     @GetMapping("/ticketAdd")
-    public String ticketAdd(@ModelAttribute("ticket") ticket ticket)
+    public String ticketAdd(@ModelAttribute("ticket") ticket ticket, Model addr)
     {
+        Iterable<cheque> cheques = ChequeRepository.findAll();
+        addr.addAttribute("cheques",cheques);
         return "ticketAdd";
     }
 
     @PostMapping("/ticketAdd")
-    public String ticketAddAdd(@ModelAttribute("ticket") @Valid ticket ticket, BindingResult bindingResult)
+    public String ticketAddAdd(@ModelAttribute("ticket") @Valid ticket ticket, BindingResult bindingResult,
+                               @RequestParam String employeeFIO, Model addr)
     {
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
+            Iterable<cheque> cheques = ChequeRepository.findAll();
+            addr.addAttribute("cheques",cheques);
             return "ticketAdd";
+        }
+        ticket.setCheck(ChequeRepository.findByEmployeeFIO(employeeFIO));
         TicketRepository.save(ticket);
         return "redirect:/";
     }

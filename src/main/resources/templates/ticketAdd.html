@@ -53,6 +53,14 @@
                             <span class="highlight"></span>
                             <label>Оплачен?</label>
                         </div>
+                        <div class="group">
+                            <select  name="employeeFIO">
+                                <div th:each="element : ${cheques}">
+                                    <option th:text="${element.employeeFIO}"></option>
+                                </div>
+                            </select>
+                            <label>Выбор чека</label>
+                        </div>
                         <button class="btn fifth" type="submit">Добавить билет</button>
                     </div>
                 </div>

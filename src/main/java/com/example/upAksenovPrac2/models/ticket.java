@@ -1,9 +1,6 @@
 package com.example.upAksenovPrac2.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
 import java.sql.Time;
@@ -31,6 +28,9 @@ public class ticket {
     @Max(value=10, message="Количество купленных мест не может быть больше 10")
     private int countClientsSeats;
     private boolean isPaid;
+    @OneToOne(optional = true, cascade = CascadeType.ALL)
+    @JoinColumn(name="cheque_id")
+    private cheque cheque;
 
 
     public Long getId() {
@@ -79,5 +79,13 @@ public class ticket {
 
     public void setPaid(boolean paid) {
         isPaid = paid;
+    }
+
+    public cheque getCheck() {
+        return cheque;
+    }
+
+    public void setCheck(cheque cheque) {
+        this.cheque = cheque;
     }
 }

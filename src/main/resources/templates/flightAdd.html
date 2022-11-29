@@ -53,6 +53,14 @@
                 <span class="highlight"></span>
                 <label>Кол-во мест</label>
             </div>
+          <div class="group">
+            <select  name="carrierCoName">
+              <div th:each="element : ${contracts}">
+                <option th:text="${element.carrierCoName}"></option>
+              </div>
+            </select>
+            <label>Выбор компании поставщика</label>
+          </div>
           <button class="btn fifth" type="submit">Добавить рейс</button>
         </div>
       </div>

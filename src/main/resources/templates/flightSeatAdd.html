@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="${'/flight/seat/add'}" method="post">
+  <select  name="flight">
+    <div th:each="element : ${flight}">
+      <option th:value="${element.id}" th:text="${element.pointOfDeparture}"></option>
+    </div>
+  </select>
+  <select  name="seat">
+    <div th:each="element : ${seat}">
+      <option th:value="${element.id}" th:text="${element.name}"></option>
+    </div>
+  </select>
+  <br>
+  <button type="submit">Добавить места к рейсу</button>
+</form>
+</body>
+</html>

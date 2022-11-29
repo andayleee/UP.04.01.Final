@@ -7,6 +7,52 @@
 </head>
 <body class="body">
 <form th:action="${'/'}">
+  <div class="text">
+    <table border="0">
+      <tr>
+        <td>
+          <table border="0">
+      <tr>
+        <td>
+          <h1>Компания поставщика</h1>
+        </td>
+        <td>
+          <a href="/contractAdd" class="btn first">Добавить компанию</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h1>Чек</h1>
+        </td>
+        <td>
+          <a href="/chequeAdd" class="btn first">Добавить чек</a>
+        </td>
+      </tr>
+          </table>
+        </td>
+        <td>
+          <table border="0">
+          <tr>
+            <td>
+              <h1>Места</h1>
+            </td>
+            <td>
+              <a href="/seatAdd" class="btn first">Добавить место</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h1>Добавить место к рейсу</h1>
+            </td>
+            <td>
+              <a href="/flight/seat/add" class="btn first">Добавить место к рейсу</a>
+            </td>
+          </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
 <div class="text">
   <table border="0">
     <tr>
@@ -30,6 +76,8 @@
       <th>Время отправления</th>
       <th>В наличии?</th>
       <th>Количество мест</th>
+      <th>Компания перевозчик</th>
+      <th>Места</th>
       <th>Подробнее</th>
     </tr>
     </thead>
@@ -40,6 +88,18 @@
       <td><a th:text="${el.timeOfDeparture}"></a></td>
       <td><a th:text="${el.soldOut}"></a></td>
       <td><a th:text="${el.countOfSeats}"></a></td>
+      <td>
+        <from th:each="addr : ${el.getCarrierCo()}">
+          <a th:text="${addr.getCarrierCoName()}"></a>
+        </from>
+      </td>
+      <td>
+        <form th:each="se : ${el.getSeats()}">
+          <div>
+            <a th:text="${se.getName()}"/>
+          </div>
+        </form>
+      </td>
       <td><a class="send-btn" th:href="'/flight/' + ${el.id}">Подробнее</a></td>
     </tr>
     </tbody>
@@ -67,6 +127,7 @@
       <th>Кол-во мест</th>
       <th>Стоимость</th>
       <th>Оплачен?</th>
+      <th>Фамилия сотр</th>
       <th>Подробнее</th>
     </tr>
     </thead>
@@ -78,6 +139,11 @@
       <td><a th:text="${el.countClientsSeats}"></a></td>
       <td><a th:text="${el.coast}"></a></td>
       <td><a th:text="${el.isPaid}"></a></td>
+      <td>
+        <from th:each="addr : ${el.getCheck()}">
+          <a th:text="${addr.getEmployeeFIO()}"></a>
+        </from>
+      </td>
       <td><a class="send-btn" th:href="'/ticket/' + ${el.id}">Подробнее</a></td>
     </tr>
     </form>

@@ -1,21 +1,20 @@
 package com.example.upAksenovPrac2.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 @Entity
 public class flight {
-    public flight(Date dateOfFlight, Time timeOfDeparture, String pointOfDeparture, boolean soldOut, int countOfSeats) {
+    public flight(Date dateOfFlight, Time timeOfDeparture, String pointOfDeparture, boolean soldOut, int countOfSeats, contract carrierCo) {
         this.dateOfFlight = dateOfFlight;
         this.timeOfDeparture = timeOfDeparture;
         this.pointOfDeparture = pointOfDeparture;
         this.soldOut = soldOut;
         this.countOfSeats = countOfSeats;
+        this.carrierCo = carrierCo;
     }
     public flight(){}
     @Id
@@ -31,7 +30,14 @@ public class flight {
     @Min(value=0, message="Количество мест не может быть меньше 0")
     @Max(value=10, message="Количество мест не может быть больше 10")
     private int countOfSeats;
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    private contract carrierCo;
 
+    @ManyToMany
+    @JoinTable (name="flight_seat",
+            joinColumns=@JoinColumn (name="flight_id"),
+            inverseJoinColumns=@JoinColumn(name="seat_id"))
+    private List<seat> seats;
 
     public Long getId() {
         return id;
@@ -79,5 +85,21 @@ public class flight {
 
     public void setCountOfSeats(int countOfSeats) {
         this.countOfSeats = countOfSeats;
+    }
+
+    public contract getCarrierCo() {
+        return carrierCo;
+    }
+
+    public void setCarrierCo(contract carrierCo) {
+        this.carrierCo = carrierCo;
+    }
+
+    public List<seat> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(List<seat> seats) {
+        this.seats = seats;
     }
 }

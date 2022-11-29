@@ -27,6 +27,8 @@
                             <th>Время отправления</th>
                             <th>В наличии?</th>
                             <th>Количество мест</th>
+                            <th>Компания перевозчик</th>
+                            <th>Места</th>
                             <th>Редактирование</th>
                             <th>Удаление</th>
                         </tr>
@@ -38,6 +40,18 @@
                             <td><a th:text="${el.timeOfDeparture}"></a></td>
                             <td><a th:text="${el.soldOut}"></a></td>
                             <td><a th:text="${el.countOfSeats}"></a></td>
+                            <td>
+                                <from th:each="addr : ${el.getCarrierCo()}">
+                                    <a th:text="${addr.getCarrierCoName()}"></a>
+                                </from>
+                            </td>
+                            <td>
+                                <form th:each="se : ${el.getSeats()}">
+                                    <div>
+                                        <a th:text="${se.getName()}"/>
+                                    </div>
+                                </form>
+                            </td>
                             <td><a class="send-btn" th:href="'/flight/' + ${el.id} + '/edit'">Редактировать</a></td>
                             <td><a class="send-btn" th:href="'/flight/' + ${el.id} + '/remove'">Удалить</a></td>
                         </tr>

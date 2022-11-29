@@ -1,8 +1,12 @@
 package com.example.upAksenovPrac2.controllers;
 
+import com.example.upAksenovPrac2.models.contract;
 import com.example.upAksenovPrac2.models.flight;
+import com.example.upAksenovPrac2.models.seat;
 import com.example.upAksenovPrac2.models.ticket;
+import com.example.upAksenovPrac2.repo.contractRepository;
 import com.example.upAksenovPrac2.repo.flightRepository;
+import com.example.upAksenovPrac2.repo.seatRepository;
 import com.example.upAksenovPrac2.repo.ticketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +31,10 @@ public class flightController {
     private flightRepository FlightRepository;
     @Autowired
     private ticketRepository TicketRepository;
+    @Autowired
+    private contractRepository ContractRepository;
+    @Autowired
+    private seatRepository SeatRepository;
     @GetMapping("/")
     public String flights(Model model)
     {
@@ -38,16 +46,23 @@ public class flightController {
     }
 
     @GetMapping("/flightAdd")
-    public String flightAdd(@ModelAttribute("flight") flight flight)
+    public String flightAdd(@ModelAttribute("flight") flight flight, Model addr)
     {
+        Iterable<contract> contracts = ContractRepository.findAll();
+        addr.addAttribute("contracts",contracts);
         return "flightAdd";
     }
 
     @PostMapping("/flightAdd")
-    public String flightAddAdd(@ModelAttribute("flight") @Valid flight flight, BindingResult bindingResult)
+    public String flightAddAdd(@ModelAttribute("flight") @Valid flight flight, BindingResult bindingResult,
+                               @RequestParam String carrierCoName, Model addr)
     {
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
+            Iterable<contract> contracts = ContractRepository.findAll();
+            addr.addAttribute("contracts",contracts);
             return "flightAdd";
+        }
+        flight.setCarrierCo(ContractRepository.findByCarrierCoName(carrierCoName));
         FlightRepository.save(flight);
         return "redirect:/";
     }
@@ -115,4 +130,22 @@ public class flightController {
 //        return "redirect:/";
 //    }
 
+    @GetMapping("/flight/seat/add")
+    private String Main(Model model){
+        Iterable<flight> Flight = FlightRepository.findAll();
+        model.addAttribute("flight", Flight);
+        Iterable<seat> Seat = SeatRepository.findAll();
+        model.addAttribute("seat", Seat);
+        return "flightSeatAdd";
+    }
+
+    @PostMapping("/flight/seat/add")
+    public String blogPostAdd(@RequestParam Long flight, @RequestParam Long seat, Model model)
+    {
+        flight Flight = FlightRepository.findById(flight).orElseThrow();
+        seat Seat = SeatRepository.findById(seat).orElseThrow();
+        Flight.getSeats().add(Seat);
+        FlightRepository.save(Flight);
+        return "redirect:/";
+    }
 }
