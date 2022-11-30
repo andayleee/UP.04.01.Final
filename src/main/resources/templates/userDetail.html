@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <table class="table">
+        <tr>
+            <td>
+                <h1 th:text="'Пользователь : ' + ${user_object.username}"></h1>
+            </td>
+            <td/>
+        </tr>
+        <tr>
+            <td>
+                <h2 th:text="'Роли : ' + ${user_object.roles}"></h2>
+            </td>
+            <td/>
+        </tr>
+        <tr>
+            <td>
+                <h2 th:text="${user_object.active} == True ? 'Пользователь: Активный' : 'Пользователь: Неактивный'"></h2>
+            </td>
+            <td/>
+        </tr>
+        <tr>
+            <td>
+                <a class="btn first" th:href="'/admin/' + ${user_object.id} + '/update'">Редактировать</a>
+            </td>
+            <td>
+                <a href="/admin/a" class="btn first">Назад</a>
+
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

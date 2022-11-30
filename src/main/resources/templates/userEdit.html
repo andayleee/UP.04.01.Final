@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <title>Title</title>
+</head>
+<style>
+  .txt{
+    font-size: 20px;
+  }
+</style>
+<body>
+  <form method="post">
+    <table class="table">
+      <tr>
+        <td>
+          <input type="text" th:value="${user_object.username}" name="username" class="txt">
+        </td>
+        <td>
+          <div th:each="role : ${roles}" class="txt">
+            <input type="checkbox" th:id="${role}" class="txt"
+                   th:name="${'roles[]'}" th:value="${role}"
+                   th:checked="${#lists.contains(user_object.roles,role)}">
+
+            <label th:text="${role}"></label>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="btn btn-success" type="submit">Изменить пользователя</button>
+        </td>
+        <td>
+          <a class="btn btn-danger" th:href="'/admin/' + ${user_object.id}">Назад</a>
+        </td>
+      </tr>
+    </table>
+  </form>
+</body>
+</html>
