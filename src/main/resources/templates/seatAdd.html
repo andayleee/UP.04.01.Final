@@ -1,13 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Добавление нового места</title>
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<body>
-<form th:action="${'/seatAdd'}" method="post">
-  <input type="text" name="place" required>
-  <button type="submit">Добавить места</button>
+<body class="body">
+<form th:action="${'/seatAdd'}" th:object="${seat}" class="body" method="post">
+    <div class="nav">
+        <a href="/seat" class="menu-activator"><i class="ion-ios-more"></i></a>
+        <i class="ion-cube"></i>
+    </div>
+    <div class="container">
+        <div class="inner">
+            <div class="panel panel-left">
+                <div class="panel-content">
+                    <div class="image-background">
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-right">
+                <div class="panel-content">
+                    <div class="form">
+                        <h1>Добавление места</h1>
+                        <div class="group">
+                            <input type="text" name="place" required>
+                            <span class="highlight"></span>
+                            <label>Введите место</label>
+                        </div>
+                        <button class="btn fifth" type="submit">Добавить место</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu"></div>
 </form>
 </body>
 </html>

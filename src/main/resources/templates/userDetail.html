@@ -6,9 +6,13 @@
     <title>Title</title>
 </head>
 <body>
+<div th:insert="blocks/header.html"/>
 <div>
     <table class="table">
         <tr><td><h1 th:text="'Пользователь : ' + ${user_object.username}"></h1></td><td/></tr>
+        <tr><td><h1 th:text="'Фамилия : ' + ${user_object.userSur}"></h1></td><td/></tr>
+        <tr><td><h1 th:text="'Имя : ' + ${user_object.userNamee}"></h1></td><td/></tr>
+        <tr><td><h1 th:text="'Отчество : ' + ${user_object.userPatr}"></h1></td><td/></tr>
         <tr><td><h2 th:text="'Роли : ' + ${user_object.roles}"></h2></td><td/></tr>
         <tr><td><h2 th:text="${user_object.active} == True ? 'Пользователь: Активный' : 'Пользователь: Неактивный'"></h2></td><td/></tr>
         <tr><td><a class="btn first" th:href="'/admin/' + ${user_object.id} + '/update'">Редактировать</a></td>

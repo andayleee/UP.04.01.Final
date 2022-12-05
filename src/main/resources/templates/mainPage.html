@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link th:href="@{/css/mainPage.css}" rel="stylesheet" />
+  <title>AeroSales</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  :root{
+    --index:calc(1vw + 1vh);
+    --index1:calc(1vw);
+  }
+  body{
+    background: #B1B1B1;
+    background: -webkit-radial-gradient(center, ellipse cover, #feffff 0%, #8c8c8c 100%);
+    padding: 10px;
+    color: #1B1B1B;
+    font-family: "Apple LiGothic", sans-serif;
+    line-height: 1.55;
+  }
+  .layers{
+    height: 25vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 300px;
+  }
+  .layer{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .layerr{
+    height: 10vh;
+    display: block;
+    text-align: start;
+  }
+  .footer{
+    height: 20vh;
+    display: block;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    padding: 30px 30px 30px 30px;
+    padding-top: 150px;
+  }
+  .text{
+    font-size: calc(var(--index) / 1.5);
+    letter-spacing: calc(var(--index) /12);
+    margin-top: calc(var(--index) *-1);
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+  .text1{
+    font-size: calc(var(--index) / 1.5);
+    letter-spacing: calc(var(--index) /12);
+    margin-top: calc(var(--index) *-1);
+    padding-left: 10%;
+    padding-right: 10%;
+    font-weight: 900;
+  }
+  .headLine{
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: calc(var(--index) / 1.5);
+    letter-spacing: calc(var(--index) /4);
+    margin-top: calc(var(--index) *-1);
+  }
+  .title{
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: calc(var(--index) * 2.5);
+    letter-spacing: calc(var(--index) /1.5);
+    text-shadow: 0 0 20px #1B1B1B;
+  }
+</style>
+<div th:insert="blocks/header.html"/>
+<body class="body">
+  <div class="layers">
+    <div>
+      <div class="headLine">Компания по продаже авиабилетов</div>
+      <div class="title">AEROSALES</div>
+    </div>
+  </div>
+  <div class="layer">
+  <div class="layerr">
+    <p class="layerr text1">Как отыскать недорогие авиабилеты и агентство по продаже.</p>
+    <p class="layerr text">Заказывать любые авиабилеты возможно посредством портала aviasales, используя форму поиска онлайн. Современная технология позволит быстро подбирать и покупать билеты, не покидая комнату, на любой рейс.</p><br/>
+    <p class="layerr text1">Низкие тарифы на электронные авиабилеты.</p>
+    <p class="layerr text">Дабы выбрать билет на самолет, на портале aviasales, в особой форме, нужно указать личную информацию: город вылета и конечный пункт назначения, дату вылета и возвращения, число пассажиров. Как только заполните веб-форму, и через пару секунд компьютер подберет по Вашим критериям наилучшие предложения.<br/>
+      Обычно система поиска авиабилетов предоставляет результаты через нескольких минут.<br/>
+      Учтите, что Ваш запрос порой занимает и больше времени, так как на данную процедуру влияют многие показатели: качество интернет-соединения, насколько оперативно приходит информация от партнеров сервиса, параметры ПК. С помощью опции, которая будет видна после процесса, Вы сможете отметить понравившиеся билеты.<br/>
+      <br/>
+      <br/>
+      <br/>
+      <a href="/" class="layerr text">Нажмите, чтобы перейти к просмотру рейсов.</a>
+    </p><br/>
+  </div>
+  </div>
+  <div class="footer">
+    <div class="text">© AEROSALES 2022</div>
+  </div>
+</body>
+</html>

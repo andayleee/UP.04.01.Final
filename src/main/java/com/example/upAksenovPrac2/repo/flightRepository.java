@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface flightRepository extends CrudRepository<flight, Long> {
 
-    List<flight> findByPointOfDepartureContains(String pointOfDeparture);
-    List<flight> findByPointOfDepartureEquals(String pointOfDeparture);
+    List<flight> findByPointOfDepartureContainsOrPointOfArrivalContains(String pointOfDeparture, String pointOfArrival);
 }

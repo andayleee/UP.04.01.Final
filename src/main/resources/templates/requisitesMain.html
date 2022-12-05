@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+</head>
+<body class="body">
+<div th:insert="blocks/header.html"/>
+<form th:action="${'/requisites'}">
+    <div class="text">
+        <table border="0">
+            <tr>
+                <td>
+                    <h1>Реквизиты</h1>
+                </td>
+                <td>
+                    <a href="/requisitesAdd" class="btn first">Добавить реквизиты</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ИНН</th>
+            <th>КПП</th>
+            <th>Редактирвать</th>
+            <th>Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <form class="text" th:action="${'/requisites'}">
+            <tr th:each="el : ${requisites}">
+                <td><h3 th:text="${el.INN}"></h3></td>
+                <td><h3 th:text="${el.KPP}"></h3></td>
+                <td><a class="send-btn" th:href="'/requisites/' + ${el.id} + '/edit'">Редактировать</a></td>
+                <td><a class="send-btn" th:href="'/requisites/' + ${el.id} + '/remove'">Удалить</a></td>
+            </tr>
+        </form>
+        </tbody>
+    </table>
+</form>
+</body>
+</html>

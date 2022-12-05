@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <title>Редактирование реквизитов</title>
+</head>
+<body class="body">
+<form class="body" th:each="el: ${requisites}" th:object="${requisites}" method="post">
+  <div class="nav">
+    <a href="/requisites" class="menu-activator"><i class="ion-ios-more"></i></a>
+    <i class="ion-cube"></i>
+  </div>
+  <div class="container">
+    <div class="inner">
+      <div class="panel panel-left">
+        <div class="panel-content">
+          <div class="image-background">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-right">
+        <div class="panel-content" >
+          <div class="form">
+            <h1>Изменение реквизитов</h1>
+            <div class="group">
+              <input type="number" th:value="${el.INN}" name="INN" required>
+              <span class="highlight"></span>
+              <label>Введите ИНН</label>
+            </div>
+            <div class="group">
+              <input type="number" th:value="${el.KPP}" name="KPP" required>
+              <span class="highlight"></span>
+              <label>Введите КПП</label>
+            </div>
+            <form method="post">
+              <button class="btn fifth" type="submit">Изменить реквизиты</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="menu"></div>
+</form>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+</head>
+<body class="body">
+<div th:insert="blocks/header.html"/>
+<form th:action="${'/ticketList'}">
+    <div class="text">
+        <table border="0">
+            <tr>
+                <td>
+                    <h1>Список билетов</h1>
+                </td>
+                <td>
+                    <a href="/ticketListAdd" class="btn first">Добавить список билетов</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Номер</th>
+            <th>Дата формирования</th>
+            <th>Редактирвать</th>
+            <th>Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <form class="text" th:action="${'/ticketList'}">
+            <tr th:each="el : ${ticketList}">
+                <td><h3 th:text="${el.id}"></h3></td>
+                <td><h3 th:text="${el.dateOfForm}"></h3></td>
+                <td><a class="send-btn" th:href="'/ticketList/' + ${el.id} + '/edit'">Редактировать</a></td>
+                <td><a class="send-btn" th:href="'/ticketList/' + ${el.id} + '/remove'">Удалить</a></td>
+            </tr>
+        </form>
+        </tbody>
+    </table>
+</form>
+</body>
+</html>

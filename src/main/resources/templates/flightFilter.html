@@ -13,61 +13,29 @@
 <form class="text" method="post" th:action="${'/flightFilter/result'}">
   <input type="text" name="pointOfDeparture">
   <button type="submit">Найти</button>
-  <div class="text">
-  <table border="0" class="text" align="center">
-    <tr>
-      <td>
-        <fieldset class="text">
-          <legend>Мягкий поиск</legend>
+  <div class="text center">
           <table class="table">
             <thead>
             <tr>
               <th>Место отправления</th>
+              <th>Место прибытия</th>
               <th>Дата рейса</th>
               <th>Время отправления</th>
-              <th>В наличии?</th>
-              <th>Количество мест</th>
+              <th>Время прибытия</th>
+              <th>Стоимость</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="el : ${result}">
               <td><h3 th:text="${el.pointOfDeparture}"></h3></td>
+              <td><h3 th:text="${el.pointOfArrival}"></h3></td>
               <td><a th:text="${el.dateOfFlight}"></a></td>
               <td><a th:text="${el.timeOfDeparture}"></a></td>
-              <td><a th:text="${el.soldOut}"></a></td>
-              <td><a th:text="${el.countOfSeats}"></a></td>
+              <td><a th:text="${el.timeOfArrival}"></a></td>
+              <td><a th:text="${el.coast}"></a></td>
             </tr>
             </tbody>
           </table>
-        </fieldset>
-      </td>
-      <td>
-        <fieldset class="text">
-          <legend>Жесткий поиск</legend>
-          <table class="table">
-            <thead>
-            <tr>
-              <th>Место отправления</th>
-              <th>Дата рейса</th>
-              <th>Время отправления</th>
-              <th>В наличии?</th>
-              <th>Количество мест</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="el : ${result2}">
-              <td><h3 th:text="${el.pointOfDeparture}"></h3></td>
-              <td><a th:text="${el.dateOfFlight}"></a></td>
-              <td><a th:text="${el.timeOfDeparture}"></a></td>
-              <td><a th:text="${el.soldOut}"></a></td>
-              <td><a th:text="${el.countOfSeats}"></a></td>
-            </tr>
-            </tbody>
-          </table>
-        </fieldset>
-      </td>
-    </tr>
-  </table>
   </div>
 </form>
 </body>

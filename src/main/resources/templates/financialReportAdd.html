@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавление нового финансового отчета</title>
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body class="body">
+<form th:action="${'/financialReportAdd'}" th:object="${financialReport}" class="body" method="post">
+    <div class="nav">
+        <a href="/financialReport" class="menu-activator"><i class="ion-ios-more"></i></a>
+        <i class="ion-cube"></i>
+    </div>
+    <div class="container">
+        <div class="inner">
+            <div class="panel panel-left">
+                <div class="panel-content">
+                    <div class="image-background">
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-right">
+                <div class="panel-content">
+                    <div class="form">
+                        <h1>Добавление финансового отчета</h1>
+                        <div class="group">
+                            <input type="date" name="dateOfForm" required>
+                            <span class="highlight"></span>
+                            <label>Введите дату формирования</label>
+                        </div>
+                        <div class="group">
+                            <input type="number" name="totalIncome" required>
+                            <label>Введите общие доходы</label>
+                        </div>
+                        <div class="group">
+                            <input type="number" name="totalPayments" required>
+                            <label>Введите общие расходы</label>
+                        </div>
+                        <div class="group">
+                            <select  name="username" required>
+                                <div th:each="element : ${users}">
+                                    <option th:text="${element.username}"></option>
+                                </div>
+                            </select>
+                            <label>Выбор пользователя</label>
+                        </div>
+                        <div class="group">
+                            <select  name="nameOfBank" required>
+                                <div th:each="element : ${coAccounts}">
+                                    <option th:text="${element.nameOfBank}"></option>
+                                </div>
+                            </select>
+                            <label>Выбор счета</label>
+                        </div>
+                        <button class="btn fifth" type="submit">Добавить отчет</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu"></div>
+</form>
+</body>
+</html>

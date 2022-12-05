@@ -7,27 +7,30 @@ import java.sql.Time;
 
 @Entity
 public class ticket {
-    public ticket(String fioClient, Date dateOfDelivery, double coast, int countClientsSeats, boolean isPaid) {
-        this.fioClient = fioClient;
-        this.dateOfDelivery = dateOfDelivery;
-        this.coast = coast;
+
+    public ticket(Date dateOfBooking, Date dateOfEndBooking, int countClientsSeats, ticketList ticketLi, user userNa) {
+        this.dateOfBooking = dateOfBooking;
+        this.dateOfEndBooking = dateOfEndBooking;
         this.countClientsSeats = countClientsSeats;
-        this.isPaid = isPaid;
+        this.ticketLi = ticketLi;
+        this.userNa = userNa;
     }
     public ticket(){}
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotEmpty(message = "Значение не может быть пустым")
-    private String fioClient;
     @NotNull(message = "Ведите дату")
-    private Date dateOfDelivery;
-    @Digits(integer = 6, fraction = 2, message = "Число не может быть более 999999,99")
-    private  double coast;
+    private Date dateOfBooking;
+    @NotNull(message = "Ведите дату")
+    private Date dateOfEndBooking;
     @Min(value=0, message="Количество купленных мест не может быть меньше 0")
-    @Max(value=10, message="Количество купленных мест не может быть больше 10")
+    @Max(value=25, message="Количество купленных мест не может быть больше 25")
     private int countClientsSeats;
-    private boolean isPaid;
+    @ManyToOne(optional = true)
+    private ticketList ticketLi;
+
+    @ManyToOne(optional = true)
+    private user userNa;
     @OneToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name="cheque_id")
     private cheque cheque;
@@ -41,28 +44,21 @@ public class ticket {
         this.id = id;
     }
 
-    public String getFioClient() {
-        return fioClient;
+
+    public Date getDateOfBooking() {
+        return dateOfBooking;
     }
 
-    public void setFioClient(String fioClient) {
-        this.fioClient = fioClient;
+    public void setDateOfBooking(Date dateOfBooking) {
+        this.dateOfBooking = dateOfBooking;
     }
 
-    public Date getDateOfDelivery() {
-        return dateOfDelivery;
+    public Date getDateOfEndBooking() {
+        return dateOfEndBooking;
     }
 
-    public void setDateOfDelivery(Date dateOfDelivery) {
-        this.dateOfDelivery = dateOfDelivery;
-    }
-
-    public double getCoast() {
-        return coast;
-    }
-
-    public void setCoast(double coast) {
-        this.coast = coast;
+    public void setDateOfEndBooking(Date dateOfEndBooking) {
+        this.dateOfEndBooking = dateOfEndBooking;
     }
 
     public int getCountClientsSeats() {
@@ -73,12 +69,20 @@ public class ticket {
         this.countClientsSeats = countClientsSeats;
     }
 
-    public boolean isPaid() {
-        return isPaid;
+    public ticketList getTicketLi() {
+        return ticketLi;
     }
 
-    public void setPaid(boolean paid) {
-        isPaid = paid;
+    public void setTicketLi(ticketList ticketLi) {
+        this.ticketLi = ticketLi;
+    }
+
+    public user getUserNa() {
+        return userNa;
+    }
+
+    public void setUserNa(user userNa) {
+        this.userNa = userNa;
     }
 
     public cheque getCheck() {

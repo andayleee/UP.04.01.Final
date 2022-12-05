@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <title>Редактирование счетов</title>
+</head>
+<body class="body">
+<form class="body" th:each="el: ${coAccount}" th:object="${coAccount}" method="post">
+  <div class="nav">
+    <a href="/coAccount" class="menu-activator"><i class="ion-ios-more"></i></a>
+    <i class="ion-cube"></i>
+  </div>
+  <div class="container">
+    <div class="inner">
+      <div class="panel panel-left">
+        <div class="panel-content">
+          <div class="image-background">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-right">
+        <div class="panel-content" >
+          <div class="form">
+            <h1>Изменение счета</h1>
+            <div class="group">
+              <input type="text" th:value="${el.nameOfBank}" name="nameOfBank" required>
+              <span class="highlight"></span>
+              <label>Введите наименование банка</label>
+            </div>
+            <div class="group">
+              <input type="text" th:value="${el.account}" name="account" required>
+              <span class="highlight"></span>
+              <label>Введите банковский счет</label>
+            </div>
+            <form method="post">
+              <button class="btn fifth" type="submit">Изменить счет</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="menu"></div>
+</form>
+</body>
+</html>

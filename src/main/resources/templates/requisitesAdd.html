@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавление нового ревизита</title>
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body class="body">
+<form th:action="${'/requisitesAdd'}" class="body" method="post">
+    <div class="nav">
+        <a href="/requisites" class="menu-activator"><i class="ion-ios-more"></i></a>
+        <i class="ion-cube"></i>
+    </div>
+    <div class="container">
+        <div class="inner">
+            <div class="panel panel-left">
+                <div class="panel-content">
+                    <div class="image-background">
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-right">
+                <div class="panel-content">
+                    <div class="form">
+                        <h1>Добавление реквизита</h1>
+                        <div class="group">
+                            <input type="number" name="INN" required>
+                            <span class="highlight"></span>
+                            <label>Введите ИНН</label>
+                        </div>
+                        <div class="group">
+                            <input type="number" name="KPP" required>
+                            <span class="highlight"></span>
+                            <label>Введите КПП</label>
+                        </div>
+
+                        <button class="btn fifth" type="submit">Добавить реквизит</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu"></div>
+</form>
+</body>
+</html>

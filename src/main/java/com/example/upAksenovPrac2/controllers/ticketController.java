@@ -1,11 +1,10 @@
 package com.example.upAksenovPrac2.controllers;
 
-import com.example.upAksenovPrac2.models.cheque;
-import com.example.upAksenovPrac2.models.contract;
-import com.example.upAksenovPrac2.models.flight;
-import com.example.upAksenovPrac2.models.ticket;
+import com.example.upAksenovPrac2.models.*;
 import com.example.upAksenovPrac2.repo.chequeRepository;
+import com.example.upAksenovPrac2.repo.ticketListRepository;
 import com.example.upAksenovPrac2.repo.ticketRepository;
+import com.example.upAksenovPrac2.repo.userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -21,23 +20,31 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+@PreAuthorize("hasAnyAuthority('ADMIN','SALES')")
 public class ticketController {
     @Autowired
     private ticketRepository TicketRepository;
     @Autowired
     private chequeRepository ChequeRepository;
-//    @GetMapping("/ticket")
-//    public String tickets(Model model)
-//    {
-//        Iterable<ticket> ticket = TicketRepository.findAll();
-//        model.addAttribute("ticket", ticket);
-//        return "flightMain";
-//    }
+    @Autowired
+    private userRepository UserRepository;
+    @Autowired
+    private ticketListRepository TicketListRepository;
+    @GetMapping("/ticket")
+    public String tickets(Model model)
+    {
+        Iterable<ticket> ticket = TicketRepository.findAll();
+        model.addAttribute("ticket", ticket);
+        return "ticketMain";
+    }
 
     @GetMapping("/ticketAdd")
     public String ticketAdd(@ModelAttribute("ticket") ticket ticket, Model addr)
     {
+        Iterable<ticketList> ticketLists = TicketListRepository.findAll();
+        addr.addAttribute("ticketLists",ticketLists);
+        Iterable<user> users = UserRepository.findAll();
+        addr.addAttribute("users",users);
         Iterable<cheque> cheques = ChequeRepository.findAll();
         addr.addAttribute("cheques",cheques);
         return "ticketAdd";
@@ -45,32 +52,22 @@ public class ticketController {
 
     @PostMapping("/ticketAdd")
     public String ticketAddAdd(@ModelAttribute("ticket") @Valid ticket ticket, BindingResult bindingResult,
-                               @RequestParam String employeeFIO, Model addr)
+                               @RequestParam String link,@RequestParam Date ticketNu,@RequestParam String userNa, Model addr)
     {
-        if (bindingResult.hasErrors()) {
-            Iterable<cheque> cheques = ChequeRepository.findAll();
-            addr.addAttribute("cheques",cheques);
-            return "ticketAdd";
-        }
-        ticket.setCheck(ChequeRepository.findByEmployeeFIO(employeeFIO));
+//        if (bindingResult.hasErrors()) {
+//            Iterable<ticketList> ticketLists = TicketListRepository.findAll();
+//            addr.addAttribute("ticketLists",ticketLists);
+//            Iterable<user> users = UserRepository.findAll();
+//            addr.addAttribute("users",users);
+//            Iterable<cheque> cheques = ChequeRepository.findAll();
+//            addr.addAttribute("cheques",cheques);
+//            return "ticketAdd";
+//        }
+        ticket.setTicketLi(TicketListRepository.findByDateOfForm(ticketNu));
+        ticket.setUserNa(UserRepository.findUserByUsername(userNa));
+        ticket.setCheck(ChequeRepository.findByLink(link));
         TicketRepository.save(ticket);
-        return "redirect:/";
-    }
-
-    @GetMapping("/ticketFilter")
-    public String ticketFilter(Model model)
-    {
-        return "ticketFilter";
-    }
-
-    @PostMapping("/ticketFilter/result")
-    public String ticketFilterResult(@RequestParam String fioClient, Model model)
-    {
-        List<ticket> result1 = TicketRepository.findByFioClientContains(fioClient);
-        List<ticket> result2 = TicketRepository.findByFioClientEquals(fioClient);
-        model.addAttribute("result2", result2);
-        model.addAttribute("result", result1);
-        return "ticketFilter";
+        return "redirect:/ticket";
     }
 
     @GetMapping("/ticket/{id}")
@@ -90,20 +87,27 @@ public class ticketController {
     public String ticketEdit(@PathVariable("id") long id, Model model)
     {
         if(!TicketRepository.existsById(id)){
-            return "redirect:/";
+            return "redirect:/ticket";
         }
         ticket res = TicketRepository.findById(id).orElseThrow();
         model.addAttribute("ticket", res);
+        Iterable<ticketList> ticketLists = TicketListRepository.findAll();
+        model.addAttribute("ticketLists",ticketLists);
+        Iterable<user> users = UserRepository.findAll();
+        model.addAttribute("users",users);
+        Iterable<cheque> cheques = ChequeRepository.findAll();
+        model.addAttribute("cheques",cheques);
         return "ticketEdit";
     }
     @PostMapping("/ticket/{id}/edit")
     public String ticketUpdate(@PathVariable("id")long id,
-                               @Valid ticket ticket, BindingResult bindingResult)
+                               @Valid ticket ticket, BindingResult bindingResult, @RequestParam String link,@RequestParam Date ticketNu,@RequestParam String userNa)
     {
-        if (bindingResult.hasErrors())
-            return "ticketEdit";
+        ticket.setTicketLi(TicketListRepository.findByDateOfForm(ticketNu));
+        ticket.setUserNa(UserRepository.findUserByUsername(userNa));
+        ticket.setCheck(ChequeRepository.findByLink(link));
         TicketRepository.save(ticket);
-        return "redirect:/";
+        return "redirect:/ticket";
     }
     @GetMapping("/ticket/{id}/remove")
     public String ticketRemove(@PathVariable("id") long id, Model model)

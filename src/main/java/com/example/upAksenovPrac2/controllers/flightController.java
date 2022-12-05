@@ -27,27 +27,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@PreAuthorize("hasAnyAuthority('ADMIN','PILOT','USER')")
 public class flightController {
     @Autowired
     private flightRepository FlightRepository;
     @Autowired
-    private ticketRepository TicketRepository;
-    @Autowired
     private contractRepository ContractRepository;
-    @Autowired
-    private seatRepository SeatRepository;
     @GetMapping("/")
     public String flights(Model model)
     {
         Iterable<flight> flight = FlightRepository.findAll();
         model.addAttribute("flight", flight);
-        Iterable<ticket> ticket = TicketRepository.findAll();
-        model.addAttribute("ticket", ticket);
         return "flightMain";
     }
 
     @GetMapping("/flightAdd")
+    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASES')")
     public String flightAdd(@ModelAttribute("flight") flight flight, Model addr)
     {
         Iterable<contract> contracts = ContractRepository.findAll();
@@ -56,6 +50,7 @@ public class flightController {
     }
 
     @PostMapping("/flightAdd")
+    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASES')")
     public String flightAddAdd(@ModelAttribute("flight") @Valid flight flight, BindingResult bindingResult,
                                @RequestParam String carrierCoName, Model addr)
     {
@@ -78,14 +73,13 @@ public class flightController {
     @PostMapping("/flightFilter/result")
     public String flightFilterResult(@RequestParam String pointOfDeparture, Model model)
     {
-        List<flight> result1 = FlightRepository.findByPointOfDepartureContains(pointOfDeparture);
-        List<flight> result2 = FlightRepository.findByPointOfDepartureEquals(pointOfDeparture);
-        model.addAttribute("result2", result2);
+        List<flight> result1 = FlightRepository.findByPointOfDepartureContainsOrPointOfArrivalContains(pointOfDeparture, pointOfDeparture);
         model.addAttribute("result", result1);
         return "flightFilter";
     }
 
     @GetMapping("/flight/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASES')")
     public String flightDetailis(@PathVariable(value = "id") long id, Model model)
     {
         Optional<flight> flight = FlightRepository.findById(id);
@@ -99,6 +93,7 @@ public class flightController {
     }
 
     @GetMapping("/flight/{id}/edit")
+    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASES')")
     public String flightEdit(@PathVariable("id") long id, Model model)
     {
         if(!FlightRepository.existsById(id)){
@@ -106,48 +101,27 @@ public class flightController {
         }
         flight res = FlightRepository.findById(id).orElseThrow();
         model.addAttribute("flight", res);
+        Iterable<contract> contracts = ContractRepository.findAll();
+        model.addAttribute("contracts",contracts);
         return "flightEdit";
     }
     @PostMapping("/flight/{id}/edit")
+    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASES')")
     public String flightUpdate(@PathVariable("id")long id,
-                               @Valid flight flight, BindingResult bindingResult)
+                               @Valid flight flight, BindingResult bindingResult, @RequestParam String carrierCoName)
     {
         if (bindingResult.hasErrors())
             return "flightEdit";
+        flight.setCarrierCo(ContractRepository.findByCarrierCoName(carrierCoName));
         FlightRepository.save(flight);
         return "redirect:/";
     }
     @GetMapping("/flight/{id}/remove")
+    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASES')")
     public String flightRemove(@PathVariable("id") long id, Model model)
     {
         flight Flight = FlightRepository.findById(id).orElseThrow();
         FlightRepository.delete(Flight);
-        return "redirect:/";
-    }
-//    @PostMapping("/flight/{id}/remove")
-//    public String flightDelete(@PathVariable("id") long id, Model model)
-//    {
-//        flight Flight = FlightRepository.findById(id).orElseThrow();
-//        FlightRepository.delete(Flight);
-//        return "redirect:/";
-//    }
-
-    @GetMapping("/flight/seat/add")
-    private String Main(Model model){
-        Iterable<flight> Flight = FlightRepository.findAll();
-        model.addAttribute("flight", Flight);
-        Iterable<seat> Seat = SeatRepository.findAll();
-        model.addAttribute("seat", Seat);
-        return "flightSeatAdd";
-    }
-
-    @PostMapping("/flight/seat/add")
-    public String blogPostAdd(@RequestParam Long flight, @RequestParam Long seat, Model model)
-    {
-        flight Flight = FlightRepository.findById(flight).orElseThrow();
-        seat Seat = SeatRepository.findById(seat).orElseThrow();
-        Flight.getSeats().add(Seat);
-        FlightRepository.save(Flight);
         return "redirect:/";
     }
 }

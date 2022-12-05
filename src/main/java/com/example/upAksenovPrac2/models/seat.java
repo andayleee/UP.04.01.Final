@@ -1,6 +1,7 @@
 package com.example.upAksenovPrac2.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -29,11 +30,11 @@ public class seat {
         this.id = id;
     }
 
-    public String getName() {
+    public String getPlace() {
         return place;
     }
 
-    public void setName(String place) {
+    public void setPlace(String place) {
         this.place = place;
     }
 

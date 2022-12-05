@@ -11,11 +11,15 @@
   }
 </style>
 <body>
+<div th:insert="blocks/header.html"/>
   <form method="post">
     <table class="table">
       <tr>
         <td>
-          <input type="text" th:value="${user_object.username}" name="username" class="txt">
+          <input type="text" th:value="${user_object.username}" name="username" class="txt" required>
+          <input type="text" th:value="${user_object.userSur}" name="userSur" class="txt" required>
+          <input type="text" th:value="${user_object.userNamee}" name="userNamee" class="txt" required>
+          <input type="text" th:value="${user_object.userPatr}" name="userPatr" class="txt" required>
         </td>
         <td>
           <div th:each="role : ${roles}" class="txt">

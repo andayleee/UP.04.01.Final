@@ -1,18 +1,25 @@
 package com.example.upAksenovPrac2.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.sql.Date;
+
 @Entity
 @Table(name = "cheque")
 public class cheque {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String employeeFIO;
-    @OneToOne(optional = true, mappedBy = "cheque")
+    @NotNull(message = "Ведите все данные")
+    private Date dateOfForm;
+    @NotNull(message = "Ведите все данные")
+    private String link;
+    @OneToOne(optional = true, mappedBy = "cheque",  cascade = CascadeType.ALL)
     private ticket owner;
 
-    public cheque(String employeeFIO) {
-        this.employeeFIO = employeeFIO;
+    public cheque(Date dateOfForm, String link) {
+        this.dateOfForm = dateOfForm;
+        this.link = link;
     }
     public cheque (){}
     public Long getId() {
@@ -23,12 +30,20 @@ public class cheque {
         this.id = id;
     }
 
-    public String getEmployeeFIO() {
-        return employeeFIO;
+    public Date getDateOfForm() {
+        return dateOfForm;
     }
 
-    public void setEmployeeFIO(String employeeFIO) {
-        this.employeeFIO = employeeFIO;
+    public void setDateOfForm(Date dateOfForm) {
+        this.dateOfForm = dateOfForm;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public ticket getOwner() {

@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface ticketRepository extends CrudRepository<ticket, Long> {
 
-    List<ticket> findByFioClientContains(String FioClient);
-    List<ticket> findByFioClientEquals(String FioClient);
 }

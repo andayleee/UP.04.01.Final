@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <title>Редактирование мест</title>
+</head>
+<body class="body">
+<form class="body" th:each="el: ${seat}" th:object="${seat}" method="post">
+  <div class="nav">
+    <a href="/seat" class="menu-activator"><i class="ion-ios-more"></i></a>
+    <i class="ion-cube"></i>
+  </div>
+  <div class="container">
+    <div class="inner">
+      <div class="panel panel-left">
+        <div class="panel-content">
+          <div class="image-background">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-right">
+        <div class="panel-content" >
+          <div class="form">
+            <h1>Изменение чека</h1>
+            <div class="group">
+              <input type="text" th:value="${el.place}" name="place" required>
+              <span class="highlight"></span>
+              <label>Введите номер места</label>
+            </div>
+            <form method="post">
+              <button class="btn fifth" type="submit">Изменить место</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="menu"></div>
+</form>
+</body>
+</html>

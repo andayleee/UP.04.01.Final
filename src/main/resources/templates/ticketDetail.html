@@ -7,7 +7,7 @@
 </head>
 <body class="body">
 <div class="nav">
-    <a href="/" class="menu-activator"><i class="ion-ios-more"></i></a>
+    <a href="/ticket" class="menu-activator"><i class="ion-ios-more"></i></a>
     <i class="ion-cube"></i>
 </div>
 <div class="inner">
@@ -22,26 +22,34 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>ФИО клиента</th>
-                    <th>Дата покупки</th>
+                    <th>Дата бронирования</th>
+                    <th>Дата окончания бронирования</th>
                     <th>Кол-во мест</th>
-                    <th>Стоимость</th>
-                    <th>Оплачен?</th>
-                    <th>Фамилия сотрудника</th>
+                    <th>Номер списка билетов</th>
+                    <th>Логин сотрудника</th>
+                    <th>Ссылка на чек</th>
                     <th>Редактирование</th>
                     <th>Удаление</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr th:each="el : ${ticket}">
-                        <td><h3 th:text="${el.fioClient}"></h3></td>
-                        <td><a th:text="${el.dateOfDelivery}"></a></td>
+                        <td><h3 th:text="${el.dateOfBooking}"></h3></td>
+                        <td><a th:text="${el.dateOfEndBooking}"></a></td>
                         <td><a th:text="${el.countClientsSeats}"></a></td>
-                        <td><a th:text="${el.coast}"></a></td>
-                        <td><a th:text="${el.isPaid}"></a></td>
+                        <td>
+                            <from th:each="addr : ${el.getTicketLi()}">
+                                <a th:text="${addr.getId()}"></a>
+                            </from>
+                        </td>
+                        <td>
+                            <from th:each="addr : ${el.getUserNa()}">
+                                <a th:text="${addr.getUsername()}"></a>
+                            </from>
+                        </td>
                         <td>
                             <from th:each="addr : ${el.getCheck()}">
-                                <a th:text="${addr.getEmployeeFIO()}"></a>
+                                <a th:text="${addr.getLink()}"></a>
                             </from>
                         </td>
                         <td><a class="send-btn" th:href="'/ticket/' + ${el.id} + '/edit'">Редактировать</a></td>

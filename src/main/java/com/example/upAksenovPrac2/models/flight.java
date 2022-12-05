@@ -8,12 +8,13 @@ import java.util.List;
 
 @Entity
 public class flight {
-    public flight(Date dateOfFlight, Time timeOfDeparture, String pointOfDeparture, boolean soldOut, int countOfSeats, contract carrierCo) {
+    public flight(Date dateOfFlight, Time timeOfDeparture, Time timeOfArrival, String pointOfDeparture,String pointOfArrival, double coast, contract carrierCo) {
         this.dateOfFlight = dateOfFlight;
         this.timeOfDeparture = timeOfDeparture;
+        this.timeOfArrival = timeOfArrival;
         this.pointOfDeparture = pointOfDeparture;
-        this.soldOut = soldOut;
-        this.countOfSeats = countOfSeats;
+        this.pointOfArrival = pointOfArrival;
+        this.coast = coast;
         this.carrierCo = carrierCo;
     }
     public flight(){}
@@ -22,17 +23,19 @@ public class flight {
     private Long id;
     @NotNull(message = "Ведите дату")
     private Date dateOfFlight;
-    @NotNull(message = "Ведите время")
+    @NotNull(message = "Ведите время отправления")
     private Time timeOfDeparture;
+    @NotNull(message = "Ведите время прибытия")
+    private Time timeOfArrival;
     @NotEmpty(message = "Значение не может быть пустым")
     private  String pointOfDeparture;
-    private boolean soldOut;
-    @Min(value=0, message="Количество мест не может быть меньше 0")
-    @Max(value=10, message="Количество мест не может быть больше 10")
-    private int countOfSeats;
+    @NotEmpty(message = "Значение не может быть пустым")
+    private  String pointOfArrival;
+    @Min(value=0, message="Стоимость не может быть меньше 0")
+    @Digits(integer = 6, fraction = 2, message = "Стоимость не может быть более 999,999.99")
+    private double coast;
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     private contract carrierCo;
-
     @ManyToMany
     @JoinTable (name="flight_seat",
             joinColumns=@JoinColumn (name="flight_id"),
@@ -63,6 +66,14 @@ public class flight {
         this.timeOfDeparture = timeOfDeparture;
     }
 
+    public Time getTimeOfArrival() {
+        return timeOfArrival;
+    }
+
+    public void setTimeOfArrival(Time timeOfArrival) {
+        this.timeOfArrival = timeOfArrival;
+    }
+
     public String getPointOfDeparture() {
         return pointOfDeparture;
     }
@@ -71,20 +82,20 @@ public class flight {
         this.pointOfDeparture = pointOfDeparture;
     }
 
-    public boolean isSoldOut() {
-        return soldOut;
+    public String getPointOfArrival() {
+        return pointOfArrival;
     }
 
-    public void setSoldOut(boolean soldOut) {
-        this.soldOut = soldOut;
+    public void setPointOfArrival(String pointOfArrival) {
+        this.pointOfArrival = pointOfArrival;
     }
 
-    public int getCountOfSeats() {
-        return countOfSeats;
+    public double getCoast() {
+        return coast;
     }
 
-    public void setCountOfSeats(int countOfSeats) {
-        this.countOfSeats = countOfSeats;
+    public void setCoast(double coast) {
+        this.coast = coast;
     }
 
     public contract getCarrierCo() {

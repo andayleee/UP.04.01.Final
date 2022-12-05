@@ -8,14 +8,13 @@
 <body class="body">
 <form class="body" th:each="el: ${ticket}" th:object="${ticket}" method="post">
 <div class="nav">
-  <a href="/" class="menu-activator"><i class="ion-ios-more"></i></a>
+  <a href="/ticket" class="menu-activator"><i class="ion-ios-more"></i></a>
   <i class="ion-cube"></i>
 </div>
 <div class="container">
   <div class="inner">
-    <div class="form group" style="color: red" th:if="${#fields.hasErrors('fioClient')}" th:errors="*{fioClient}"></div>
-    <div class="form group" style="color: red" th:if="${#fields.hasErrors('dateOfDelivery')}" th:errors="*{dateOfDelivery}"></div>
-    <div class="form group" style="color: red" th:if="${#fields.hasErrors('coast')}" th:errors="*{coast}"></div>
+    <div class="form group" style="color: red" th:if="${#fields.hasErrors('dateOfBooking')}" th:errors="*{dateOfBooking}"></div>
+    <div class="form group" style="color: red" th:if="${#fields.hasErrors('dateOfEndBooking')}" th:errors="*{dateOfEndBooking}"></div>
     <div class="form group" style="color: red" th:if="${#fields.hasErrors('countClientsSeats')}" th:errors="*{countClientsSeats}"></div>
     <div class="panel panel-left">
       <div class="panel-content">
@@ -29,13 +28,13 @@
         <div class="form">
           <h1>Изменение рейса</h1>
           <div class="group">
-            <input type="text" th:value="${el.fioClient}" th:field="*{fioClient}" name="fioClient" required>
+            <input type="date" th:value="${el.dateOfBooking}" th:field="*{dateOfBooking}" name="dateOfBooking" required>
             <span class="highlight"></span>
-            <label>Введите ФИО клиента</label>
+            <label>Введите дату бронирования</label>
           </div>
           <div class="group">
-            <input type="date" th:value="${el.dateOfDelivery}" th:field="*{dateOfDelivery}" name="dateOfDelivery">
-            <label>Введите дату заказа</label>
+            <input type="date" th:value="${el.dateOfEndBooking}" th:field="*{dateOfEndBooking}" name="dateOfEndBooking" required>
+            <label>Введите дату окончания брони</label>
           </div>
           <div class="group">
             <input type="number" th:value="${el.countClientsSeats}" th:field="*{countClientsSeats}" name="countClientsSeats" required>
@@ -43,13 +42,28 @@
             <label>Введите кол-во билетов</label>
           </div>
           <div class="group">
-            <input type="number" th:value="${el.coast}" th:field="*{coast}" name="coast">
-            <span class="highlight"></span>
-            <label>Введите стоимость</label>
+            <select  name="ticketNu" required>
+              <div th:each="element : ${ticketLists}">
+                <option th:text="${element.dateOfForm}"></option>
+              </div>
+            </select>
+            <label>Выбор даты составления списка рейсов</label>
           </div>
           <div class="group">
-            <input type="checkbox" th:checked="${el.isPaid}" name="isPaid">
-            <label>Оплачен?</label>
+            <select  name="userNa" required>
+              <div th:each="element : ${users}">
+                <option th:text="${element.username}"></option>
+              </div>
+            </select>
+            <label>Выбор логина пользователя</label>
+          </div>
+          <div class="group">
+            <select  name="link" required>
+              <div th:each="element : ${cheques}">
+                <option th:text="${element.link}"></option>
+              </div>
+            </select>
+            <label>Выбор чека</label>
           </div>
           <form method="post">
             <button class="btn fifth" type="submit">Изменить билет</button>

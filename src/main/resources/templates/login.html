@@ -4,7 +4,7 @@
 <style>
     body {
         align-items: center;
-        background-color: #eee;
+        background-color: #B1B1B1;
         display: flex;
         justify-content: center;
         height: 100vh;
@@ -143,19 +143,21 @@
     <title>Title</title>
 </head>
 <form class="form" method="post" th:action="@{/login}">
+    <a class="send-btn" href="/main">Главная страница</a>
     <div class="title">Добро пожаловать</div>
     <div class="subtitle">Авторизация!</div>
     <div class="input-container ic1">
-        <input type="text" class="input" id="firstname" name="username" placeholder=" " />
+        <input type="text" class="input" id="firstname" name="username" placeholder=" " required/>
         <div class="cut"></div>
         <label for="firstname" class="placeholder">Логин</label>
     </div>
     <div class="input-container ic2">
-        <input type="password" class="input" id="lastname" name="password" placeholder=" " />
+        <input type="password" class="input" id="lastname" name="password" placeholder=" " required/>
         <div class="cut"></div>
         <label for="lastname" class="placeholder">Пароль</label>
     </div>
     <button type="text" class="submit">Войти</button>
     <a href="/registration" class="send-btn">Нет аккаунта? Зарегистрируйтесь!</a>
+
 </form>
 </html>

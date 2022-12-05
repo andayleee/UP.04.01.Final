@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <title>Редактирование списка билетов</title>
+</head>
+<body class="body">
+<form class="body" th:each="el: ${ticketList}" th:object="${ticketList}" method="post">
+    <div class="nav">
+        <a href="/ticketList" class="menu-activator"><i class="ion-ios-more"></i></a>
+        <i class="ion-cube"></i>
+    </div>
+    <div class="container">
+        <div class="inner">
+            <div class="panel panel-left">
+                <div class="panel-content">
+                    <div class="image-background">
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-right">
+                <div class="panel-content" >
+                    <div class="form">
+                        <h1>Изменение списка билетов</h1>
+                        <div class="group">
+                            <input type="date" th:value="${el.dateOfForm}" name="dateOfForm" required>
+                            <span class="highlight"></span>
+                            <label>Введите дату формирования</label>
+                        </div>
+                        <form method="post">
+                            <button class="btn fifth" type="submit">Изменить список билетов</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu"></div>
+</body>
+</form>
+</html>

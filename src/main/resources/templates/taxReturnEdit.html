@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <title>Редактирование налогового отчета</title>
+</head>
+<body class="body">
+<form class="body" th:each="el: ${taxReturn}" th:object="${taxReturn}" method="post">
+  <div class="nav">
+    <a href="/taxReturn" class="menu-activator"><i class="ion-ios-more"></i></a>
+    <i class="ion-cube"></i>
+  </div>
+  <div class="container">
+    <div class="inner">
+      <div class="panel panel-left">
+        <div class="panel-content">
+          <div class="image-background">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-right">
+        <div class="panel-content" >
+          <div class="form">
+            <h1>Изменение налогового отчета</h1>
+            <div class="group">
+              <input type="date" th:value="${el.dateOfForm}" name="dateOfForm" required>
+              <span class="highlight"></span>
+              <label>Введите формирования</label>
+            </div>
+            <div class="group">
+              <input type="number" th:value="${el.ammountOfTax}" name="ammountOfTax" required>
+              <label>Введите кол-во налогов</label>
+            </div>
+            <div class="group">
+              <select  name="username" required>
+                <div th:each="element : ${users}">
+                  <option th:text="${element.username}"></option>
+                </div>
+              </select>
+              <label>Выбор пользователя</label>
+            </div>
+            <div class="group">
+              <select  name="nameOfBank" required>
+                <div th:each="element : ${coAccounts}">
+                  <option th:text="${element.nameOfBank}"></option>
+                </div>
+              </select>
+              <label>Выбор счета</label>
+            </div>
+            <div class="group">
+              <select  name="INN" required>
+                <div th:each="element : ${requisitess}">
+                  <option th:text="${element.INN}"></option>
+                </div>
+              </select>
+              <label>Выбор реквизита</label>
+            </div>
+            <form method="post">
+              <button class="btn fifth" type="submit">Изменить отчет</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="menu"></div>
+</body>
+</form>
+</html>
