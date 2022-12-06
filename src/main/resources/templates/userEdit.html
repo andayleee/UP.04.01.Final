@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
   <link th:href="@{/css/main.css}" rel="stylesheet" />
@@ -12,14 +12,14 @@
 </style>
 <body>
 <div th:insert="blocks/header.html"/>
-  <form method="post">
+  <form method="post" th:object="${user_object}">
     <table class="table">
       <tr>
         <td>
-          <input type="text" th:value="${user_object.username}" name="username" class="txt" required>
-          <input type="text" th:value="${user_object.userSur}" name="userSur" class="txt" required>
-          <input type="text" th:value="${user_object.userNamee}" name="userNamee" class="txt" required>
-          <input type="text" th:value="${user_object.userPatr}" name="userPatr" class="txt" required>
+          <input type="text" th:field="*{username}" th:value="*{username}" name="username" class="txt" required  placeholder="Логин">
+          <input type="text" th:field="*{userSur}" th:value="${user_object.userSur}" name="userSur" class="txt" required  placeholder="Фамилия">
+          <input type="text" th:field="*{userNamee}" th:value="${user_object.userNamee}" name="userNamee" class="txt" required placeholder="Имя">
+          <input type="text" th:field="*{userPatr}" th:value="${user_object.userPatr}" name="userPatr" class="txt" placeholder="Отчество">
         </td>
         <td>
           <div th:each="role : ${roles}" class="txt">
@@ -40,6 +40,10 @@
         </td>
       </tr>
     </table>
+    <div class="form group" style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+    <div class="form group" style="color: red" th:if="${#fields.hasErrors('userSur')}" th:errors="*{userSur}"></div>
+    <div class="form group" style="color: red" th:if="${#fields.hasErrors('userNamee')}" th:errors="*{userNamee}"></div>
+    <div class="form group" style="color: red" th:if="${#fields.hasErrors('userPatr')}" th:errors="*{userPatr}"></div>
   </form>
 </body>
 </html>

@@ -1,23 +1,81 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <title>Добавление нового контракта</title>
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Title</title>
 </head>
-<body>
-<form th:action="${'/flight/seat/add'}" method="post">
-  <select  name="flight">
-    <div th:each="element : ${flight}">
-      <option th:value="${element.id}" th:text="${element.pointOfDeparture}"></option>
+<body class="body">
+<form th:action="${'/flight/seat/add'}" class="body" method="post">
+  <div class="nav">
+    <a href="/contract" class="menu-activator"><i class="ion-ios-more"></i></a>
+    <i class="ion-cube"></i>
+  </div>
+  <div class="container">
+    <div class="inner">
+      <div class="panel panel-left">
+        <div class="panel-content">
+          <div class="image-background">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-right">
+        <div class="panel-content">
+          <div class="form">
+            <h1>Добавление места на рейс</h1>
+            <div class="group">
+              <select  name="flight">
+                <div th:each="element : ${flight}">
+                  <option th:value="${element.id}" th:text="${element.pointOfDeparture}"></option>
+                </div>
+              </select>
+              <br/>
+              <span class="highlight"></span>
+              <label><br/>Выберите пункт отправления</label>
+            </div>
+            <div class="group">
+              <select  name="seat">
+                <div th:each="element : ${seat}">
+                  <option th:value="${element.id}" th:text="${element.place}"></option>
+                </div>
+              </select>
+              <br/>
+              <span class="highlight"></span>
+              <label><br/>Выберите место</label>
+            </div>
+            <br/>
+            <button class="btn fifth" type="submit">Добавить места к рейсу</button>
+          </div>
+        </div>
+      </div>
     </div>
-  </select>
-  <select  name="seat">
-    <div th:each="element : ${seat}">
-      <option th:value="${element.id}" th:text="${element.name}"></option>
-    </div>
-  </select>
-  <br>
-  <button type="submit">Добавить места к рейсу</button>
+  </div>
+  <div class="menu"></div>
 </form>
 </body>
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form th:action="${'/flight/seat/add'}" method="post">-->
+<!--  <select  name="flight">-->
+<!--    <div th:each="element : ${flight}">-->
+<!--      <option th:value="${element.id}" th:text="${element.pointOfDeparture}"></option>-->
+<!--    </div>-->
+<!--  </select>-->
+<!--  <select  name="seat">-->
+<!--    <div th:each="element : ${seat}">-->
+<!--      <option th:value="${element.id}" th:text="${element.place}"></option>-->
+<!--    </div>-->
+<!--  </select>-->
+<!--  <br>-->
+<!--  <button type="submit">Добавить места к рейсу</button>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->

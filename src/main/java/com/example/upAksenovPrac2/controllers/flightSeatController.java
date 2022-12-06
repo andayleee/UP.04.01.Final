@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+//@PreAuthorize("hasAnyAuthority('ADMIN','PURCHASES')")
 public class flightSeatController {
     @Autowired
     private flightRepository FlightRepository;
@@ -22,7 +23,6 @@ public class flightSeatController {
     private seatRepository SeatRepository;
 
     @GetMapping("/flight/seat/add")
-    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASES')")
     private String Main(Model model){
         Iterable<flight> flight = FlightRepository.findAll();
         model.addAttribute("flight", flight);
@@ -32,7 +32,6 @@ public class flightSeatController {
     }
 
     @PostMapping("/flight/seat/add")
-    @PreAuthorize("hasAnyAuthority('ADMIN','PURCHASES')")
     public String blogPostAdd(@RequestParam Long flight, @RequestParam Long seat, Model model)
     {
         flight Flight = FlightRepository.findById(flight).orElseThrow();

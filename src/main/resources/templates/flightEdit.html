@@ -18,6 +18,8 @@
         <div class="form group" style="color: red" th:if="${#fields.hasErrors('pointOfDeparture')}" th:errors="*{pointOfDeparture}"></div>
         <div class="form group" style="color: red" th:if="${#fields.hasErrors('timeOfArrival')}" th:errors="*{timeOfArrival}"></div>
         <div class="form group" style="color: red" th:if="${#fields.hasErrors('pointOfArrival')}" th:errors="*{pointOfArrival}"></div>
+        <div class="form group" style="color: red" th:if="${#fields.hasErrors('coast')}" th:errors="*{coast}"></div>
+
         <div class="panel panel-left">
             <div class="panel-content">
                 <div class="image-background">
@@ -53,7 +55,7 @@
                         <label>Введите место прибытия</label>
                     </div>
                     <div class="group">
-                        <input type="number" th:value="${el.coast}" name="coast" required>
+                        <input type="number" th:value="${el.coast}" th:field="*{coast}" name="coast" required>
                         <span class="highlight"></span>
                         <label>Стоимоть</label>
                     </div>

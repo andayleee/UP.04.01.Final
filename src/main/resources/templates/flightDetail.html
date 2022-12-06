@@ -50,7 +50,7 @@
                             <td>
                                 <form th:each="se : ${el.getSeats()}">
                                     <div>
-                                        <a th:text="${se.getName()}"/>
+                                        <a th:text="${se.getPlace()}"/>
                                     </div>
                                 </form>
                             <td><a class="send-btn" th:href="'/flight/' + ${el.id} + '/edit'">Редактировать</a></td>

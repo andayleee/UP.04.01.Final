@@ -41,11 +41,22 @@ public class ticketController {
     @GetMapping("/ticketAdd")
     public String ticketAdd(@ModelAttribute("ticket") ticket ticket, Model addr)
     {
+
+        List<cheque> chequeList = ChequeRepository.aaa();
+//        addr.addAttribute("checueList",chequeList);
         Iterable<ticketList> ticketLists = TicketListRepository.findAll();
         addr.addAttribute("ticketLists",ticketLists);
         Iterable<user> users = UserRepository.findAll();
         addr.addAttribute("users",users);
-        Iterable<cheque> cheques = ChequeRepository.findAll();
+        List<cheque> cheques = ChequeRepository.bbb();
+        for(int i =0; i < chequeList.size(); i++)
+        {
+            for(int j = 0; j < cheques.size(); j++)
+            {
+                if(chequeList.get(i) == cheques.get(j))
+                    cheques.remove(j);
+            }
+        }
         addr.addAttribute("cheques",cheques);
         return "ticketAdd";
     }
@@ -54,15 +65,25 @@ public class ticketController {
     public String ticketAddAdd(@ModelAttribute("ticket") @Valid ticket ticket, BindingResult bindingResult,
                                @RequestParam String link,@RequestParam Date ticketNu,@RequestParam String userNa, Model addr)
     {
-//        if (bindingResult.hasErrors()) {
-//            Iterable<ticketList> ticketLists = TicketListRepository.findAll();
-//            addr.addAttribute("ticketLists",ticketLists);
-//            Iterable<user> users = UserRepository.findAll();
-//            addr.addAttribute("users",users);
-//            Iterable<cheque> cheques = ChequeRepository.findAll();
-//            addr.addAttribute("cheques",cheques);
-//            return "ticketAdd";
-//        }
+        if (bindingResult.hasErrors()) {
+            List<cheque> chequeList = ChequeRepository.aaa();
+//        addr.addAttribute("checueList",chequeList);
+            Iterable<ticketList> ticketLists = TicketListRepository.findAll();
+            addr.addAttribute("ticketLists",ticketLists);
+            Iterable<user> users = UserRepository.findAll();
+            addr.addAttribute("users",users);
+            List<cheque> cheques = ChequeRepository.bbb();
+            for(int i =0; i < chequeList.size(); i++)
+            {
+                for(int j = 0; j < cheques.size(); j++)
+                {
+                    if(chequeList.get(i) == cheques.get(j))
+                        cheques.remove(j);
+                }
+            }
+            addr.addAttribute("cheques",cheques);
+            return "ticketAdd";
+        }
         ticket.setTicketLi(TicketListRepository.findByDateOfForm(ticketNu));
         ticket.setUserNa(UserRepository.findUserByUsername(userNa));
         ticket.setCheck(ChequeRepository.findByLink(link));
@@ -91,11 +112,21 @@ public class ticketController {
         }
         ticket res = TicketRepository.findById(id).orElseThrow();
         model.addAttribute("ticket", res);
+        List<cheque> chequeList = ChequeRepository.aaa();
+//        addr.addAttribute("checueList",chequeList);
         Iterable<ticketList> ticketLists = TicketListRepository.findAll();
         model.addAttribute("ticketLists",ticketLists);
         Iterable<user> users = UserRepository.findAll();
         model.addAttribute("users",users);
-        Iterable<cheque> cheques = ChequeRepository.findAll();
+        List<cheque> cheques = ChequeRepository.bbb();
+        for(int i =0; i < chequeList.size(); i++)
+        {
+            for(int j = 0; j < cheques.size(); j++)
+            {
+                if(chequeList.get(i) == cheques.get(j))
+                    cheques.remove(j);
+            }
+        }
         model.addAttribute("cheques",cheques);
         return "ticketEdit";
     }
@@ -114,6 +145,6 @@ public class ticketController {
     {
         ticket Ticket = TicketRepository.findById(id).orElseThrow();
         TicketRepository.delete(Ticket);
-        return "redirect:/";
+        return "redirect:/ticket";
     }
 }

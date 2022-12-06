@@ -111,6 +111,7 @@ public class flightController {
                                @Valid flight flight, BindingResult bindingResult, @RequestParam String carrierCoName)
     {
         if (bindingResult.hasErrors())
+
             return "flightEdit";
         flight.setCarrierCo(ContractRepository.findByCarrierCoName(carrierCoName));
         FlightRepository.save(flight);

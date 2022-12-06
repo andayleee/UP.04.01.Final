@@ -28,8 +28,10 @@ public class flight {
     @NotNull(message = "Ведите время прибытия")
     private Time timeOfArrival;
     @NotEmpty(message = "Значение не может быть пустым")
+    @Size (max = 20, message = "Пункт отправления не должен привышать 20 символов")
     private  String pointOfDeparture;
     @NotEmpty(message = "Значение не может быть пустым")
+    @Size (max = 20, message = "Пункт прибытия не должен привышать 20 символов")
     private  String pointOfArrival;
     @Min(value=0, message="Стоимость не может быть меньше 0")
     @Digits(integer = 6, fraction = 2, message = "Стоимость не может быть более 999,999.99")

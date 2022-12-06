@@ -2,6 +2,7 @@ package com.example.upAksenovPrac2.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Set;
 
@@ -10,9 +11,13 @@ public class user {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size (max = 20, message = "Фамилия не должна привышать 20 символов")
     private String userSur;
+    @Size (max = 20, message = "Имя не должно привышать 20 символов")
     private String userNamee;
+    @Size (max = 20, message = "Отчество не должно привышать 20 символов")
     private String userPatr;
+    @Size (max = 30, message = "Логин не должен привышать 20 символов")
     private String username;
     private String password;
     private boolean active;

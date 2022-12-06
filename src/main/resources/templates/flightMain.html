@@ -7,9 +7,9 @@
 </head>
 <body class="body">
 <div th:insert="blocks/header.html"/>
-<form th:action="${'/'}">
+<form th:action="${'/'}" xmlns:sec="http://www.w3.org/1999/xhtml">
 <div class="text">
-  <table border="0">
+  <table border="0" sec:authorize="hasAuthority('ADMIN') or hasAuthority('BUHGALTER') or hasAuthority('PURCHASES') or hasAuthority('SALES')">
     <tr>
       <td>
         <h1>Рейсы</h1>
